@@ -39,13 +39,28 @@
 
             wait_between_checks: 1000,
 
-            price_selector: '.order-total > td:nth-child(2) > strong:nth-child(1) > span:nth-child(1) > bdi:nth-child(1)',
+            price_selector: '.woocommerce-Price-amount.amount',
 
             form_input_selector: '#coupon_code',
             form_submit_selector: '[name="apply_coupon"]',
             form_success_selector: null,
 
             form_open_selector: '#coupon-trigger',
+            form_cancel_selector: null,
+            form_error_selector: '.woocommerce-error',
+        },
+        {
+            host: 'van-house.es',
+
+            wait_between_checks: 3000,
+
+            price_selector: '.woocommerce-Price-amount.amount',
+
+            form_input_selector: '#coupon_code',
+            form_submit_selector: '[name="apply_coupon"]',
+            form_success_selector: null,
+
+            form_open_selector: null,
             form_cancel_selector: null,
             form_error_selector: '.woocommerce-error',
         }
@@ -203,9 +218,12 @@
 
         await sleep(2000)
 
+        console.debug(`Coupon "${ COUPON }", price: ${ getCurrentPrice() }`)
+
         if (checkForPriceDifference(ORIGINAL_PRICE, getCurrentPrice())) {
 
-            console.info(`COUPON "${ COUPON }" price: "${ getCurrentPrice() }"`)
+            console.info("THERE WAS A PRICE CHANGE")
+            console.info(`COUPON "${ COUPON }", price: "${ getCurrentPrice() }"`)
         }
 
         currentCouponIndex++
